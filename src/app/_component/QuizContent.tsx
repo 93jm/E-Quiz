@@ -1,13 +1,13 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import ActiveButton from "./ActiveButton";
-import style from "./quizContent.module.css";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { quizListSelector, quizWrongList } from "@/store";
 import { useRouter } from "next/navigation";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { quizListSelector, quizWrongList } from "@/store";
+import ActiveButton from "./ActiveButton";
+import style from "./quizContent.module.css";
 
 export default function QuizContent() {
   const router = useRouter();
@@ -35,7 +35,11 @@ export default function QuizContent() {
   const getNextItem = () => {
     //다음 문제로 이동시 틀린 문제였다면 오답노트 기록
     if (btnChecked.text !== quizList[currentIdx].correct_answer) {
-      setQuizWrongList((prev) => [...prev, quizList[currentIdx]]);
+      const selectedAnswer = btnChecked.text;
+      setQuizWrongList((prev) => [
+        ...prev,
+        { ...quizList[currentIdx], selectedAnswer },
+      ]);
     }
 
     //현재 퀴즈의 인덱스 체크 및 결과 페이지로 오픈 유무 체크

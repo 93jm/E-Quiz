@@ -32,6 +32,7 @@ export default function ActiveButton({
         onClick?.();
         break;
       case "Score":
+        onClick?.();
         router.push("/result");
         getGameEndTime();
     }

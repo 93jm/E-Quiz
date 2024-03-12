@@ -2,7 +2,11 @@ import { getQuizItems } from "@/app/_lib";
 import { NewQuiz, Quiz } from "@/model/quiz";
 import { atom, selector } from "recoil";
 
-export const quizWrongList = atom<NewQuiz[]>({
+interface WrongQuiz extends NewQuiz {
+  selectedAnswer: string;
+}
+
+export const quizWrongList = atom<WrongQuiz[]>({
   default: [],
   key: "quiz-wrong-list",
 });
