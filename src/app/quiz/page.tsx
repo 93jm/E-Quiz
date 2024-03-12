@@ -1,13 +1,10 @@
-import LayoutProvider from "../_component/LayoutProvider";
-import QuizContent from "../_component/QuizContent";
-import { getQuizItems } from "../_lib/getQuizItems";
+import { LayoutProvider } from "@/app/_component";
+import { QuizContent } from "@/app/_component";
 
 export default async function Quiz() {
-  const quizData = await getQuizItems();
-
   return (
     <LayoutProvider>
-      <QuizContent data={quizData.results} />
+      <QuizContent />
     </LayoutProvider>
   );
 }

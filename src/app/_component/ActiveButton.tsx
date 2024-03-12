@@ -1,12 +1,8 @@
 "use client";
 
-import {
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegment,
-} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { getGameEndTime, setStartTime } from "@/utils";
 import styles from "./activeButton.module.css";
-import { getGameEndTime, setStartTime } from "../utils/common";
 
 type TProps = "Main" | "Next" | "Score";
 

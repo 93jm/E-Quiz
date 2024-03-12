@@ -1,28 +1,24 @@
 "use client";
 
-import { NewQuiz, Quiz } from "@/model/quiz";
 import { Fragment, useEffect, useState } from "react";
 import ActiveButton from "./ActiveButton";
 import style from "./quizContent.module.css";
 import { useRouter } from "next/navigation";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { quizListSelector, quizWrongList } from "@/store";
 
-interface Props {
-  data: Quiz[];
-}
-
-export default function QuizContent({ data = [] }: Props) {
+export default function QuizContent() {
   const router = useRouter();
-
-  const [quizList, setQuizList] = useState<NewQuiz[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [btnChecked, setBtnChecked] = useState({
     idx: -1,
     text: "",
   });
-  const [result, setResult] = useState([]);
+  const quizList = useRecoilValue(quizListSelector);
+  const setQuizWrongList = useSetRecoilState(quizWrongList);
 
   const handleAnswerClick = (answer: string, idx: number) => {
     if (btnChecked.idx !== -1) {
@@ -39,11 +35,11 @@ export default function QuizContent({ data = [] }: Props) {
   const getNextItem = () => {
     //다음 문제로 이동시 틀린 문제였다면 오답노트 기록
     if (btnChecked.text !== quizList[currentIdx].correct_answer) {
-      console.log(" >> ", quizList[currentIdx]);
+      setQuizWrongList((prev) => [...prev, quizList[currentIdx]]);
     }
 
     //현재 퀴즈의 인덱스 체크 및 결과 페이지로 오픈 유무 체크
-    if (currentIdx !== data.length - 1) {
+    if (currentIdx !== quizList.length - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
       setCurrentIdx(0);
@@ -55,26 +51,17 @@ export default function QuizContent({ data = [] }: Props) {
       idx: -1,
       text: "",
     });
-    // setbuttonCheckIdx(-1);
   };
 
   useEffect(() => {
-    if (!data.length) {
+    if (!quizList.length) {
       router.replace("/");
-    } else {
-      const newData = data.map((quiz) => ({
-        ...quiz,
-        totalAnswer: [...quiz.incorrect_answers, quiz.correct_answer].sort(
-          () => Math.random() - 0.5
-        ),
-      }));
-      setQuizList(newData);
     }
-  }, [data]);
+  }, [quizList]);
 
   return (
     <>
-      <h3>{`Quiz ${currentIdx + 1} / ${data.length}`}</h3>
+      <h3>{`Quiz ${currentIdx + 1} / ${quizList.length}`}</h3>
       <div className={style.question}>
         {quizList.length > 0 ? (
           quizList[currentIdx]?.question
@@ -118,7 +105,7 @@ export default function QuizContent({ data = [] }: Props) {
               ))}
       </div>
       <ActiveButton
-        type={`${currentIdx === data.length - 1 ? "Score" : "Next"}`}
+        type={`${currentIdx === quizList.length - 1 ? "Score" : "Next"}`}
         btnDisabled={isDisabled}
         onClick={getNextItem}
       />
