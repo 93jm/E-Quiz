@@ -1,36 +1,53 @@
 "use client";
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSelectedLayoutSegment,
+} from "next/navigation";
 import styles from "./activeButton.module.css";
-import Link from "next/link";
+import { getGameEndTime, setStartTime } from "../utils/common";
 
 type TProps = "Main" | "Next" | "Score";
 
 interface Props {
   type: TProps;
   btnDisabled?: boolean;
+  onClick?: () => void;
 }
 
-export default function ActiveButton({ type, btnDisabled = false }: Props) {
-  const segment = useSelectedLayoutSegment();
-
+export default function ActiveButton({
+  type,
+  btnDisabled = false,
+  onClick,
+}: Props) {
+  // const pathname = usePathname();
+  const router = useRouter();
   const text =
     type === "Main" ? "Start" : type === "Next" ? "Next" : "Check Score";
 
-  if (type === "Next") {
-    return (
-      <button className={styles.button} disabled={btnDisabled}>
-        {text}
-      </button>
-    );
-  }
+  const startGame = () => {
+    switch (type) {
+      case "Main":
+        setStartTime();
+        router.push("/quiz");
+        break;
+      case "Next":
+        onClick?.();
+        break;
+      case "Score":
+        router.push("/result");
+        getGameEndTime();
+    }
+  };
 
   return (
-    <Link
-      href={type === "Main" ? "/quiz" : "/result"}
+    <button
       className={styles.button}
+      disabled={btnDisabled}
+      onClick={startGame}
     >
       {text}
-    </Link>
+    </button>
   );
 }

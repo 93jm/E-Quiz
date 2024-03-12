@@ -1,0 +1,54 @@
+.question {
+  width: 100%;
+}
+
+.answerListWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.answerButton {
+  width: 100%;
+  background-color: #fff;
+  padding: 16px 8px;
+  border-radius: 8px;
+}
+
+.answerButtonExcellent {
+  width: 100%;
+  background-color: #fff;
+  padding: 16px 8px;
+  border-radius: 8px;
+  border: 2px solid #00c896;
+  cursor: default;
+}
+
+.answerButtonWrong {
+  width: 100%;
+  background-color: #fff;
+  padding: 16px 8px;
+  border-radius: 8px;
+  border: 2px solid tomato;
+  cursor: default;
+}
+
+.answerButton:hover {
+  opacity: 0.7;
+}
+
+.answerButton:active {
+  box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
+  position: relative;
+  top: 2px;
+}
+
+.answerButton:disabled {
+  cursor: default;
+}
+
+.answerButton:disabled:active {
+  box-shadow: none;
+  top: 0px;
+}
