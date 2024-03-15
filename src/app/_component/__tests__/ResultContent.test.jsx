@@ -43,7 +43,7 @@ const inCorrectData = [
 ];
 
 describe("ResultContent", () => {
-  it("ResultContent 렌더링시에 콘텐츠 영역이 뜨는가 ?", () => {
+  it("ResultContent 렌더링시에 결과 콘텐츠 영역이 뜨는가 ?", () => {
     const { getByTestId } = render(
       <RecoilRoot
         initializeState={(snapshot) => {
