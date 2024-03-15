@@ -31,7 +31,7 @@ export default function QuizContent() {
     });
   };
 
-  const getNextItem = () => {
+  const moveToNextStep = () => {
     //다음 문제로 이동시 틀린 문제였다면 오답노트 기록
     if (btnChecked.text !== quizList[currentIdx].correct_answer) {
       const selectedAnswer = btnChecked.text;
@@ -64,7 +64,7 @@ export default function QuizContent() {
           <Skeleton width={"50%"} />
         )}
       </div>
-      <div className={style.answerListWrapper}>
+      <div data-testid="quiz-content" className={style.answerListWrapper}>
         {quizList.length > 0
           ? quizList[currentIdx]?.totalAnswer.map((item, idx) => {
               const correct = quizList[currentIdx]?.correct_answer;
@@ -102,7 +102,7 @@ export default function QuizContent() {
       <ActiveButton
         type={`${currentIdx === quizList.length - 1 ? "Score" : "Next"}`}
         btnDisabled={isDisabled}
-        onClick={getNextItem}
+        onClick={moveToNextStep}
       />
     </>
   );

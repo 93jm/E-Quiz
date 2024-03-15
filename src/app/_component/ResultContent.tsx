@@ -1,12 +1,12 @@
 "use client";
 
-import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { getTime } from "@/utils";
+import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import style from "./resultContent.module.css";
 import ICON_ARROW_BOTTOM from "/public/arrow-bottom.png";
 import ICON_ARROW_TOP from "/public/arrow-top.png";
@@ -33,14 +33,14 @@ export default function ResultContent() {
         You have completed <br /> 🎉 all the quizzes 🎉
       </div>
       <>
-        {!defaultList.length || !wrongList.length ? (
+        {!defaultList.length ? (
           <div className={style.flexColumnWrapper}>
             <Skeleton height={200} />
             <Skeleton height={48} />
             <Skeleton height={48} />
           </div>
         ) : (
-          <>
+          <div data-testid="result-content" className={style.flexColumnWrapper}>
             <section className={style.chartWrapper}>
               <ResultChart />
             </section>
@@ -75,7 +75,7 @@ export default function ResultContent() {
                 style={{ marginLeft: 15 }}
               />
             </button>
-          </>
+          </div>
         )}
       </>
       {isOpenWrongList && wrongList.length > 0 && (

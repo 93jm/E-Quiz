@@ -6,7 +6,6 @@ import { setTime } from "@/utils";
 import { quizItemList, resetQuizInformation } from "@/store/quiz";
 import { Quiz } from "@/model/quiz";
 import styles from "./activeButton.module.css";
-import { getQuizItems } from "../_lib";
 
 type TProps = "Main" | "Next" | "Score";
 
@@ -26,8 +25,10 @@ export default function ActiveButton({
 
   const router = useRouter();
 
-  const handleFetch = async () => {
-    const data = await getQuizItems();
+  const getQuizItems = async () => {
+    const data = await fetch(
+      "https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple"
+    ).then((res) => res.json());
 
     const newResult = ((data.results as Quiz[]) || []).map((quiz) => ({
       ...quiz,
@@ -47,7 +48,7 @@ export default function ActiveButton({
       case "Main":
         resetQuiz();
         setTime("start");
-        handleFetch();
+        getQuizItems();
         router.push("/quiz");
         break;
       case "Next":
