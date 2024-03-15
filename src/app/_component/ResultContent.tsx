@@ -1,20 +1,22 @@
 "use client";
 
-import { quizListSelector, quizWrongList } from "@/store";
+import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import { Fragment, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./resultContent.module.css";
 import ICON_ARROW_BOTTOM from "/public/arrow-bottom.png";
 import ICON_ARROW_TOP from "/public/arrow-top.png";
+import ResultChart from "./ResultChart";
 
 export default function ResultContent() {
   const router = useRouter();
   const wrongList = useRecoilValue(quizWrongList);
-  const defaultList = useRecoilValue(quizListSelector);
+  const defaultList = useRecoilValue(quizItemList);
 
-  const resetWrongList = useResetRecoilState(quizWrongList);
+  const resetWrongList = useResetRecoilState(resetQuizInformation);
 
   const [isOpenWrongList, setIsOpenWrongList] = useState(false);
 
@@ -23,47 +25,69 @@ export default function ResultContent() {
     router.replace("/");
   };
 
-  console.log(
-    "맞춘 문제 >> ",
-    defaultList.length - wrongList.length,
-    "틀린 갯수 >> ",
-    wrongList.length
-  );
+  useEffect(() => {
+    return () => {
+      resetWrongList();
+    };
+  }, []);
+
+  if (!defaultList.length || !wrongList.length) {
+    router.replace("/");
+  }
+
   return (
     <>
       <div className={style.title}>
         You have completed <br /> 🎉 all the quizzes 🎉
       </div>
-      <section className={style.chartWrapper}>차트</section>
-      <button
-        className={style.basicButton}
-        onClick={moveToRoot}
-        style={{ color: "#00c896" }}
-      >
-        Retry
-      </button>
-      <button
-        className={style.basicButton}
-        onClick={() => setIsOpenWrongList(!isOpenWrongList)}
-      >
-        <Image
-          src={isOpenWrongList ? ICON_ARROW_TOP : ICON_ARROW_BOTTOM}
-          alt="icon_arrow"
-          width={20}
-          height={20}
-          style={{ marginRight: 15 }}
-        />
-        Check incorrect answers
-        <Image
-          src={isOpenWrongList ? ICON_ARROW_TOP : ICON_ARROW_BOTTOM}
-          alt="icon_arrow"
-          width={20}
-          height={20}
-          style={{ marginLeft: 15 }}
-        />
-      </button>
+      <>
+        {!defaultList.length || !wrongList.length ? (
+          <div className={style.flexColumnWrapper}>
+            <Skeleton height={200} />
+            <Skeleton height={48} />
+            <Skeleton height={48} />
+          </div>
+        ) : (
+          <>
+            <section className={style.chartWrapper}>
+              <ResultChart />
+            </section>
+            <h3>Total : 10</h3>
+            <h3>{`Score : ${defaultList.length - wrongList.length} - ${
+              wrongList.length
+            }`}</h3>
+            <button
+              className={style.basicButton}
+              onClick={moveToRoot}
+              style={{ color: "#00c896" }}
+            >
+              Retry
+            </button>
+            <button
+              className={style.basicButton}
+              onClick={() => setIsOpenWrongList(!isOpenWrongList)}
+            >
+              <Image
+                src={isOpenWrongList ? ICON_ARROW_TOP : ICON_ARROW_BOTTOM}
+                alt="icon_arrow"
+                width={20}
+                height={20}
+                style={{ marginRight: 15 }}
+              />
+              Check incorrect answers
+              <Image
+                src={isOpenWrongList ? ICON_ARROW_TOP : ICON_ARROW_BOTTOM}
+                alt="icon_arrow"
+                width={20}
+                height={20}
+                style={{ marginLeft: 15 }}
+              />
+            </button>
+          </>
+        )}
+      </>
       {isOpenWrongList && wrongList.length > 0 && (
-        <div className={style.wrongWrapper}>
+        <div className={style.flexColumnWrapper}>
           {wrongList.map((quiz, idx) => {
             return (
               <Fragment key={idx}>

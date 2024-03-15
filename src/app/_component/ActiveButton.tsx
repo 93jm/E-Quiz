@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import { getGameEndTime, setStartTime } from "@/utils";
 import styles from "./activeButton.module.css";
+import { useSetRecoilState } from "recoil";
+import { quizItemList } from "@/store/quiz";
+import { Quiz } from "@/model/quiz";
 
 type TProps = "Main" | "Next" | "Score";
 
@@ -17,8 +20,25 @@ export default function ActiveButton({
   btnDisabled = false,
   onClick,
 }: Props) {
-  // const pathname = usePathname();
+  const setQuizList = useSetRecoilState(quizItemList);
+
   const router = useRouter();
+
+  const handleFetch = async () => {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_QUIZ}`).then(
+      (res) => res.json()
+    );
+
+    const newResult = ((data.results as Quiz[]) || []).map((quiz) => ({
+      ...quiz,
+      totalAnswer: [...quiz.incorrect_answers, quiz.correct_answer].sort(
+        () => Math.random() - 0.5
+      ),
+    }));
+
+    setQuizList(newResult);
+  };
+
   const text =
     type === "Main" ? "Start" : type === "Next" ? "Next" : "Check Score";
 
@@ -26,6 +46,7 @@ export default function ActiveButton({
     switch (type) {
       case "Main":
         setStartTime();
+        handleFetch();
         router.push("/quiz");
         break;
       case "Next":

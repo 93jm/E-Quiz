@@ -1,3 +1,3 @@
-import { quizWrongList, quizListSelector } from "./quiz";
+import { quizItemList, quizWrongList, resetQuizInformation } from "./quiz";
 
-export { quizWrongList, quizListSelector };
+export { quizItemList, quizWrongList, resetQuizInformation };

@@ -1,23 +1,22 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { quizListSelector, quizWrongList } from "@/store";
-import { useRouter } from "next/navigation";
+import { quizItemList, quizWrongList } from "@/store";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
 import ActiveButton from "./ActiveButton";
 import style from "./quizContent.module.css";
 
 export default function QuizContent() {
-  const router = useRouter();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [btnChecked, setBtnChecked] = useState({
     idx: -1,
     text: "",
   });
-  const quizList = useRecoilValue(quizListSelector);
+  const quizList = useRecoilValue(quizItemList);
+
   const setQuizWrongList = useSetRecoilState(quizWrongList);
 
   const handleAnswerClick = (answer: string, idx: number) => {
@@ -56,12 +55,6 @@ export default function QuizContent() {
       text: "",
     });
   };
-
-  useEffect(() => {
-    if (!quizList.length) {
-      router.replace("/");
-    }
-  }, [quizList]);
 
   return (
     <>
