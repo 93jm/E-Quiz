@@ -44,8 +44,6 @@ export default function QuizContent() {
     //현재 퀴즈의 인덱스 체크 및 결과 페이지로 오픈 유무 체크
     if (currentIdx !== quizList.length - 1) {
       setCurrentIdx((prev) => prev + 1);
-    } else {
-      setCurrentIdx(0);
     }
 
     //reset
