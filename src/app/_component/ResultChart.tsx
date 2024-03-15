@@ -13,11 +13,13 @@ const CHART_OPTION = {
   },
   series: {
     type: "pie",
-    radius: "100%",
+    radius: "80%",
     data: [],
     color: COLOR_PALETTE,
     label: {
+      fontSize: 14,
       color: "gray",
+      position: "outside",
     },
     itemStyle: {
       shadowBlur: 10,
