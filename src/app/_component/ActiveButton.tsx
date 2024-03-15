@@ -1,11 +1,11 @@
 "use client";
 
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { useRouter } from "next/navigation";
 import { setTime } from "@/utils";
-import styles from "./activeButton.module.css";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { quizItemList, resetQuizInformation } from "@/store/quiz";
 import { Quiz } from "@/model/quiz";
+import styles from "./activeButton.module.css";
 import { getQuizItems } from "../_lib";
 
 type TProps = "Main" | "Next" | "Score";

@@ -2,15 +2,15 @@
 
 import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import Skeleton from "react-loading-skeleton";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
+import { getTime } from "@/utils";
 import style from "./resultContent.module.css";
 import ICON_ARROW_BOTTOM from "/public/arrow-bottom.png";
 import ICON_ARROW_TOP from "/public/arrow-top.png";
 import ResultChart from "./ResultChart";
-import { getTime } from "@/utils";
 
 export default function ResultContent() {
   const router = useRouter();

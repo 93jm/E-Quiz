@@ -1,9 +1,9 @@
 "use client";
 
-import { quizItemList } from "@/store";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
+import { useRouter } from "next/navigation";
+import { quizItemList } from "@/store";
 
 export default function RedirectToRoot() {
   const defaultList = useRecoilValue(quizItemList);

@@ -2,9 +2,9 @@
 
 import { Fragment, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { quizItemList, quizWrongList } from "@/store";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
+import { quizItemList, quizWrongList } from "@/store";
 import ActiveButton from "./ActiveButton";
 import style from "./quizContent.module.css";
 

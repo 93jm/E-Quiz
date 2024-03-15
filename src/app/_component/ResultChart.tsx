@@ -1,9 +1,9 @@
 "use client";
 
-import { quizItemList, quizWrongList } from "@/store";
 import ECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { quizItemList, quizWrongList } from "@/store";
 
 const COLOR_PALETTE = ["#00c896", "tomato"];
 
@@ -40,7 +40,7 @@ export default function ResultChart() {
         data: [
           { name: "CORRECT 🥳", value: defaultList.length - wrongList.length },
           {
-            name: "INCORRECT 🥳",
+            name: "INCORRECT 🥲",
             value: wrongList.length,
           },
         ],

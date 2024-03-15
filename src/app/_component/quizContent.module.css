@@ -11,26 +11,26 @@
 
 .answerButton {
   width: 100%;
-  background-color: #fff;
   padding: 16px 8px;
   border-radius: 8px;
+  background-color: #fff;
 }
 
 .answerButtonExcellent {
   width: 100%;
-  background-color: #fff;
   padding: 16px 8px;
-  border-radius: 8px;
   border: 2px solid #00c896;
+  border-radius: 8px;
+  background-color: #fff;
   cursor: default;
 }
 
 .answerButtonWrong {
   width: 100%;
-  background-color: #fff;
   padding: 16px 8px;
-  border-radius: 8px;
   border: 2px solid tomato;
+  border-radius: 8px;
+  background-color: #fff;
   cursor: default;
 }
 
@@ -39,9 +39,9 @@
 }
 
 .answerButton:active {
-  box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
   position: relative;
   top: 2px;
+  box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
 }
 
 .answerButton:disabled {
@@ -49,6 +49,6 @@
 }
 
 .answerButton:disabled:active {
-  box-shadow: none;
   top: 0px;
+  box-shadow: none;
 }
