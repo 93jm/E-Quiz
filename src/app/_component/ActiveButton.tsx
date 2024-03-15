@@ -6,6 +6,7 @@ import styles from "./activeButton.module.css";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { quizItemList, resetQuizInformation } from "@/store/quiz";
 import { Quiz } from "@/model/quiz";
+import { getQuizItems } from "../_lib";
 
 type TProps = "Main" | "Next" | "Score";
 
@@ -26,9 +27,7 @@ export default function ActiveButton({
   const router = useRouter();
 
   const handleFetch = async () => {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_QUIZ}`).then(
-      (res) => res.json()
-    );
+    const data = await getQuizItems();
 
     const newResult = ((data.results as Quiz[]) || []).map((quiz) => ({
       ...quiz,
