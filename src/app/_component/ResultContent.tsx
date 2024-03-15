@@ -3,18 +3,20 @@
 import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import Skeleton from "react-loading-skeleton";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./resultContent.module.css";
 import ICON_ARROW_BOTTOM from "/public/arrow-bottom.png";
 import ICON_ARROW_TOP from "/public/arrow-top.png";
 import ResultChart from "./ResultChart";
+import { getTime } from "@/utils";
 
 export default function ResultContent() {
   const router = useRouter();
   const wrongList = useRecoilValue(quizWrongList);
   const defaultList = useRecoilValue(quizItemList);
+  const times = getTime();
 
   const resetWrongList = useResetRecoilState(resetQuizInformation);
 
@@ -24,17 +26,6 @@ export default function ResultContent() {
     resetWrongList();
     router.replace("/");
   };
-
-  //페이지 이탈시 session reset
-  useEffect(() => {
-    return () => {
-      resetWrongList();
-    };
-  }, []);
-
-  if (!defaultList.length || !wrongList.length) {
-    router.replace("/");
-  }
 
   return (
     <>
@@ -53,10 +44,10 @@ export default function ResultContent() {
             <section className={style.chartWrapper}>
               <ResultChart />
             </section>
-            <h3>Total : 10</h3>
-            <h3>{`Score : ${defaultList.length - wrongList.length} - ${
-              wrongList.length
-            }`}</h3>
+            <h4>{`Time : ${times[0] ?? 0}m ${times[1] ?? 0}s`}</h4>
+            <h4>Total : 10</h4>
+            <h4>{`Correct : ${defaultList.length - wrongList.length}`}</h4>
+            <h4>{`Incorrect : ${wrongList.length}`}</h4>
             <button
               className={style.basicButton}
               onClick={moveToRoot}

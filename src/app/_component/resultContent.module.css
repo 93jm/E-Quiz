@@ -8,7 +8,6 @@
 .chartWrapper {
   width: 100%;
   padding: 10px 0px;
-  /* background-color: tomato; */
 }
 
 .basicButton {
@@ -33,6 +32,7 @@
 .flexColumnWrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 10px;
 }
 

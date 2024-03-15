@@ -14,10 +14,7 @@ const CHART_OPTION = {
   series: {
     type: "pie",
     radius: "100%",
-    data: [
-      { value: 1049, name: "CORRECT 🥳" },
-      { value: 735, name: "INCORRECT 🥲" },
-    ],
+    data: [],
     color: COLOR_PALETTE,
     label: {
       color: "gray",

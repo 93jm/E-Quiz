@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { getGameEndTime, setStartTime } from "@/utils";
+import { setTime } from "@/utils";
 import styles from "./activeButton.module.css";
-import { useSetRecoilState } from "recoil";
-import { quizItemList } from "@/store/quiz";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { quizItemList, resetQuizInformation } from "@/store/quiz";
 import { Quiz } from "@/model/quiz";
 
 type TProps = "Main" | "Next" | "Score";
@@ -21,6 +21,7 @@ export default function ActiveButton({
   onClick,
 }: Props) {
   const setQuizList = useSetRecoilState(quizItemList);
+  const resetQuiz = useResetRecoilState(resetQuizInformation);
 
   const router = useRouter();
 
@@ -45,7 +46,8 @@ export default function ActiveButton({
   const startGame = () => {
     switch (type) {
       case "Main":
-        setStartTime();
+        resetQuiz();
+        setTime("start");
         handleFetch();
         router.push("/quiz");
         break;
@@ -53,9 +55,9 @@ export default function ActiveButton({
         onClick?.();
         break;
       case "Score":
+        setTime("end");
         onClick?.();
-        router.push("/result");
-        getGameEndTime();
+        router.replace("/result");
     }
   };
 

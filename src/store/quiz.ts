@@ -32,5 +32,7 @@ export const resetQuizInformation = selector({
   set: ({ reset }) => {
     reset(quizItemList);
     reset(quizWrongList);
+    sessionStorage?.removeItem("start");
+    sessionStorage?.removeItem("end");
   },
 });

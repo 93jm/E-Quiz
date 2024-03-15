@@ -1,3 +1,3 @@
-import { setStartTime, getGameEndTime } from "./common";
+import { setTime, getTime } from "./common";
 
-export { setStartTime, getGameEndTime };
+export { setTime, getTime };
