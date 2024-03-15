@@ -1,8 +1,8 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { quizItemList, quizWrongList } from "@/store";
+import { Fragment, useEffect, useState } from "react";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { quizItemList, quizWrongList, resetQuizInformation } from "@/store";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
 import ActiveButton from "./ActiveButton";
@@ -18,6 +18,7 @@ export default function QuizContent() {
   const quizList = useRecoilValue(quizItemList);
 
   const setQuizWrongList = useSetRecoilState(quizWrongList);
+  const resetWrongList = useResetRecoilState(resetQuizInformation);
 
   const handleAnswerClick = (answer: string, idx: number) => {
     if (btnChecked.idx !== -1) {
@@ -55,6 +56,13 @@ export default function QuizContent() {
       text: "",
     });
   };
+
+  //페이지 이탈시 session reset
+  useEffect(() => {
+    return () => {
+      resetWrongList();
+    };
+  }, []);
 
   return (
     <>

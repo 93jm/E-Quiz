@@ -6,10 +6,11 @@ interface WrongQuiz extends NewQuiz {
   selectedAnswer: string;
 }
 
-// const { persistAtom } = recoilPersist();
+const sessionStorage =
+  typeof window !== "undefined" ? window.sessionStorage : undefined;
 
 const { persistAtom } = recoilPersist({
-  key: "sessionStorage", //원하는 key 값 입력
+  key: "sessionStorage",
   storage: sessionStorage,
 });
 

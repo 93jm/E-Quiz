@@ -25,6 +25,7 @@ export default function ResultContent() {
     router.replace("/");
   };
 
+  //페이지 이탈시 session reset
   useEffect(() => {
     return () => {
       resetWrongList();
