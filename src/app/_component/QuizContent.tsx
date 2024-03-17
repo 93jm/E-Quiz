@@ -1,22 +1,22 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
 import { quizItemList, quizWrongList } from "@/store";
 import ActiveButton from "./ActiveButton";
 import style from "./quizContent.module.css";
+import { quizStep } from "@/store/quiz";
 
 export default function QuizContent() {
-  const [currentIdx, setCurrentIdx] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [btnChecked, setBtnChecked] = useState({
     idx: -1,
     text: "",
   });
+  const [currentIdx, setCurrentIdx] = useRecoilState(quizStep);
   const quizList = useRecoilValue(quizItemList);
-
   const setQuizWrongList = useSetRecoilState(quizWrongList);
 
   const handleAnswerClick = (answer: string, idx: number) => {

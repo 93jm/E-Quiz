@@ -1,6 +1,10 @@
-import { LayoutProvider } from "@/app/_component";
-import { ResultContent } from "@/app/_component";
-import RedirectToRoot from "../_component/RedirectToRoot";
+"use client";
+
+import {
+  LayoutProvider,
+  ResultContent,
+  RedirectToRoot,
+} from "@/app/_component";
 
 export default function Result() {
   return (

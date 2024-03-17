@@ -5,6 +5,7 @@ import ResultContent from "./ResultContent";
 
 import LayoutProvider from "./LayoutProvider";
 import RecoilRootProvider from "./RecoilRootProvider";
+import RedirectToRoot from "./RedirectToRoot";
 
 export {
   ActiveButton,
@@ -12,4 +13,5 @@ export {
   ResultContent,
   LayoutProvider,
   RecoilRootProvider,
+  RedirectToRoot,
 };
